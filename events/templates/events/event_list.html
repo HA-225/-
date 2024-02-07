@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>이벤트 캘린더</title>
+    <style>
+        table.month {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table.month th, table.month td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        table.month th {
+            background-color: #f2f2f2;
+        }
+
+        table.month td.day {
+            min-height: 80px;
+            position: relative;
+        }
+
+        table.month td.day span {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            font-weight: bold;
+        }
+
+        table.month td.day ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        table.month td.day ul li {
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    {% autoescape off %}
+    {{ calendar|safe }}
+    {% endautoescape %}
+</body>
+</html>
