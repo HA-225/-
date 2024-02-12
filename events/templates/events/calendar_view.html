@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar View</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // 이전 달 링크 클릭 이벤트 처리
+            $(document).on('click', '#prev-month-link', function(e) {
+                e.preventDefault(); // 기본 동작 방지
+                var url = $(this).attr("href");
+                console.log("Clicked on previous month link with URL:", url); // 콘솔에 클릭한 링크의 URL 출력
+                updateCalendar(url); // 캘린더 업데이트 함수 호출
+            });
+
+            // 다음 달 링크 클릭 이벤트 처리
+            $(document).on('click', '#next-month-link', function(e) {
+                e.preventDefault(); // 기본 동작 방지
+                var url = $(this).attr("href");
+                console.log("Clicked on next month link with URL:", url); // 콘솔에 클릭한 링크의 URL 출력
+                updateCalendar(url); // 캘린더 업데이트 함수 호출
+            });
+
+            // 캘린더 업데이트 함수
+            function updateCalendar(url) {
+                $.ajax({
+                    url: url,
+                    success: function(data) {
+                        // 서버에서 반환된 데이터로 캘린더 컨테이너 업데이트
+                        $("#calendar-container").html(data.calendar_html);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error); // 오류 발생 시 콘솔에 오류 메시지 출력
+                    }
+                });
+            }
+        });
+    </script>
+</head>
+<body>
+    <h1>Calendar View</h1>
+
+    <div id="calendar-container">
+        <!-- 서버에서 받은 캘린더 데이터를 표시할 컨테이너 -->
+        {{ calendar|safe }}
+    </div>
+
+    <!-- 이전 달, 다음 달 링크 -->
+    <p>
+        <a href="{{ prev_url }}">&lt;&lt; 이전 달</a> |
+        <a href="{{ next_url }}">다음 달 &gt;&gt;</a>
+
+    </p>
+</body>
+</html>

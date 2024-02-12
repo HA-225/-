@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from django.views.generic.base import RedirectView
 
 app_name = 'events'
 
@@ -10,4 +11,5 @@ urlpatterns = [
     path('calendar/<int:year>/<int:month>/', views.calendar_view, name='calendar_view_with_month'),
     path('get_previous_month_calendar/', views.get_previous_month_calendar, name='get_previous_month_calendar'),
     path('get_next_month_calendar/', views.get_next_month_calendar, name='get_next_month_calendar'),
+    path('favicon.ico', RedirectView.as_view(url='/static/favicon.ico')),
 ]

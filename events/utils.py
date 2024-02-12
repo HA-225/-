@@ -55,12 +55,7 @@ class EventCalendar(HTMLCalendar):
         a('</table>')
         a('\n')
 
-        # AJAX를 사용하여 이전 달과 다음 달로 이동하는 링크를 처리
-        prev_month = self.get_previous_month(theyear, themonth)
-        next_month = self.get_next_month(theyear, themonth)
-        prev_url = reverse('events:calendar_view_with_month', kwargs={'year': prev_month[0], 'month': prev_month[1]})
-        next_url = reverse('events:calendar_view_with_month', kwargs={'year': next_month[0], 'month': next_month[1]})
-        a(f'<a href="#" class="prev-month-link" data-url="{prev_url}">&lt;&lt; 이전 달</a> | <a href="#" class="next-month-link" data-url="{next_url}">다음 달 &gt;&gt;</a>')
+        
 
         return ''.join(v)
 

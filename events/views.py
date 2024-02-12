@@ -20,17 +20,15 @@ def calendar_view(request, year=None, month=None):
     if year and month:
         today = today.replace(year=int(year), month=int(month))
     events = Event.objects.all()
-    cal = EventCalendar(events).formatmonth(int(year), int(month))
+    cal = EventCalendar(events).formatmonth(today.year, today.month)
     
     prev_month = (today.year, today.month - 1) if today.month > 1 else (today.year - 1, 12)
     next_month = (today.year, today.month + 1) if today.month < 12 else (today.year + 1, 1)
-    prev_url = reverse('events:calendar_view', kwargs={'year': prev_month[0], 'month': prev_month[1]})
-    next_url = reverse('events:calendar_view', kwargs={'year': next_month[0], 'month': next_month[1]})
+    prev_url = reverse('events:calendar_view_with_month', kwargs={'year': prev_month[0], 'month': prev_month[1]})
+    next_url = reverse('events:calendar_view_with_month', kwargs={'year': next_month[0], 'month': next_month[1]})
     
-    if request.is_ajax():
-        return JsonResponse({'calendar_html': cal, 'prev_url': prev_url, 'next_url': next_url})
-    
-    return render(request, 'events/calendar_view.html', {'calendar': cal, 'events': events})
+    return render(request, 'events/calendar_view.html', {'calendar': cal, 'events': events, 'prev_url': prev_url, 'next_url': next_url})
+
 
 def get_previous_month_calendar(request):
     today = timezone.now()
